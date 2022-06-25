@@ -1,0 +1,76 @@
+-------------------------------------------------------------------------------
+YouTube Video Link:
+https://www.youtube.com/watch?v=ThpnqYpvnIM
+-------------------------------------------------------------------------------
+
+Dockerfile:
+-------------------------------------------------------------------------------
+FROM php:7.4-cli
+COPY . /usr/src/myapp
+WORKDIR /usr/src/myapp
+CMD [ "php", "./index.php" ]
+-------------------------------------------------------------------------------
+
+index.php:
+-------------------------------------------------------------------------------
+<?php
+
+echo 'Hello World! This is to check the docker-compose file!';
+-------------------------------------------------------------------------------
+
+
+After creating the Dockerfile and the index.php file, the following docker commands are to be run:
+
+* docker build -t my-php-app => This command builds a dockerr image with the required specifications in the Dockerfile.
+                             => The -t flag is used to tag the image with the name my-php-app.
+
+* docker run -it --rm --name my-running-app my-php-app => This command runs the docker image and creates a container with the name my-running-app.
+                                                       => The -it flag tells the container to run in interactive mode.
+                                                       => The --rm flag tells the container to remove itself after it has finished running.
+
+Now this will run the contents of our php file in the terminal.
+
+However, to run the php file on localhost, we will use the following command:
+
+* docker run -d -p 80:80 --name my-apache-php-app -v ${PWD}:/var/www/html php:7.2-apache => This command runs the docker image, mapping the port 80 of the local machine to port 80 of the server. 
+                                                                                         => This will allow us to access the php file on localhost.
+                                                                                         => The -d flag tells the container to run in detached mode.
+                                                                                         => The -p flag tells the container to map the port 80 of the local machine to port 80 of the server.
+                                                                                         => The --name flag tells the container to name it my-apache-php-app.
+                                                                                         => The -v flag tells the container to mount the current directory to the /var/www/html directory.
+                                                                                         => php:7.2-apache is the name of the docker image for the apache server, on which we are running the php scripts. 
+To stop the docker containers, we can use the following command:
+
+* docker stop $(docker ps -a -q) => This command stops all the containers that are running.
+                                 => The -a flag tells the command to list all the containers.
+                                 => The -q flag tells the command to output the container IDs.
+
+Next, will run the exact sme setup using docker compose.
+We will create the docker-compose.yml file and move the index.php file to the "src" folder.
+Then we can run the following command to run the docker compose file:
+
+* docker-compose up => This command runs the docker-compose file.
+
+Now, we will import the code for mysql image into the docker-copose.yml file.
+Then we will first close the docker container using the following command:
+
+* docker-compose down
+
+Next, we will run the docker compose file again with the mysql image added:
+
+* docker-compose up
+
+Now, if we go to localhost:8080, we will see the mysql database running with adminer login page.
+
+Henceforth, we will customize our image by adding some mysqli extensions. We will do this with the help of the docker file.
+
+New Dockerfile: 
+-------------------------------------------------------------------------------
+FROM php:7.4-apache
+RUN docker-php-ext-install-mysqli
+-------------------------------------------------------------------------------
+
+Finally, when we compose up the file, we will have the mysql server running along with the mysqli extension.
+Thereafter, follow the above-mentioned video tutorial to work with the database with persistent storage.
+
+Set the server: db, username : root, and password : example. Leave databasse empty.
