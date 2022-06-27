@@ -45,7 +45,7 @@ To stop the docker containers, we can use the following command:
                                  => The -a flag tells the command to list all the containers.
                                  => The -q flag tells the command to output the container IDs.
 
-Next, will run the exact sme setup using docker compose.
+Next, will run the exact same setup using docker compose.
 We will create the docker-compose.yml file and move the index.php file to the "src" folder.
 Then we can run the following command to run the docker compose file:
 
