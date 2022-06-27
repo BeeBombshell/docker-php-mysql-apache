@@ -21,7 +21,7 @@ echo 'Hello World! This is to check the docker-compose file!';
 
 After creating the Dockerfile and the index.php file, the following docker commands are to be run:
 
-* docker build -t my-php-app => This command builds a dockerr image with the required specifications in the Dockerfile.
+* docker build -t my-php-app . => This command builds a dockerr image with the required specifications in the Dockerfile.
                              => The -t flag is used to tag the image with the name my-php-app.
 
 * docker run -it --rm --name my-running-app my-php-app => This command runs the docker image and creates a container with the name my-running-app.
